@@ -1,2 +1,4 @@
 {"filename":"testDoc.csv","timeMs":17,"memoryUsageKb":12723,"level":"info","message":"Log Message","timestamp":"2015-02-03T20:48:59.346Z"}
 {"filename":"","timeMs":13,"memoryUsageKb":12730,"level":"info","message":"Log Message","timestamp":"2015-02-03T21:14:12.516Z"}
+{"filename":"pgadmin.log","timeMs":20,"memoryUsageKb":13087,"level":"info","message":"Log Message","timestamp":"2015-02-03T21:27:59.876Z"}
+{"filename":"testDoc.csv","timeMs":11,"memoryUsageKb":11518,"level":"info","message":"Log Message","timestamp":"2015-02-03T21:28:30.281Z"}

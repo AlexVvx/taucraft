@@ -112,7 +112,6 @@ exports.appStatistic = function(req, res) {
     //Попробую простое и быстрое решение.
     //todo: fix this
     var result = data.replace(/{"filename/g,'@arrayseparator@{"filename').slice(16);
-    console.log(result);
     var array = result.split('@arrayseparator@');
     result = [];
     array.forEach(function(x,i){
@@ -125,8 +124,6 @@ exports.appStatistic = function(req, res) {
         return;
       }
     })
-    
-    
     res.render('stats',{pageName:'Statistic', result: result});
   })
 }
