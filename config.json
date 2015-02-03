@@ -1,0 +1,7 @@
+{
+  "config": {
+    "httpPort": 3000,
+    "csvDelimiter": ";",
+    "logFileName": "appHistory.log"
+  }
+}

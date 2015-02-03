@@ -1,0 +1,15 @@
+extend layout
+block content
+
+  table.table.table-bordered
+    thead
+      tr
+        th Имя файла
+        th Время, затраченное на обработку файла, мс
+        th Общее потребление памяти приложением, кб
+    tbody
+    - each row in result
+      tr
+        td= row.filename
+        td= row.timeMs
+        td= row.memoryUsageKb

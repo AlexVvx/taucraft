@@ -1,0 +1,19 @@
+extend layout
+block content
+
+  table.table.table-bordered
+    thead
+      tr
+        th Имя колонки
+        th Заполненность колонки непустыми значениями
+        th Кол-во уникальных значений
+        th Тип
+    tbody
+    - each row in result
+      tr
+        td= row.name
+        td= row.nonespaces+' %'
+        td= row.uniquecharacters
+        td= row.datatype
+    tr
+      td(colspan=4) Общая информация о файле: 4 колонок, #{result.length} рядов

@@ -1,0 +1,24 @@
+{
+  "name": "Test_project",
+  "version": "0.0.1",
+  "private": "true",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.10.1",
+    "express": "^4.10.6",
+    "fs": "^0.0.2",
+    "jade": "^1.8.2",
+    "nconf": "^0.7.1",
+    "path": "^0.4.9",
+    "connect-busboy": "^0.2.9",
+    "csv-streamify" : "^1.0.0", 
+    "winston" : "^0.8.3",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-less": "^1.0.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-execute": "^0.2.2"
+  }
+}

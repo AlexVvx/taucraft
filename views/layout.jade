@@ -1,0 +1,12 @@
+doctype
+html
+  head
+    title #{title}
+    link(rel='stylesheet', href='/stylesheets/main.css')
+    script(type='text/javascript', src='javascripts/libs/jquery/jquery.js')
+    script(type='text/javascript', src='javascripts/script.js')
+  body
+    .container
+      .row
+        h2 #{pageName}
+        block content
