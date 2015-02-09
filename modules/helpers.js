@@ -1,7 +1,29 @@
+/* 
+ * 
+ * 
+ * @param {type} testObj
+ * @returns {Boolean}
+ */
+
+exports.isArray = function(testObj){
+  if( Object.prototype.toString.call( testObj ) === '[object Array]' ) {
+    return true;
+  }
+  return false;
+}
+
+
 /*
- * gets one column, returns number from 0 to 100
+ * @param {array} column
+ * @returns {Number} from 0 to 100
  */
 exports.nonespacesStatistics = function(column) {
+  if (!this.isArray(column)){
+    throw new Error('Expected an array');
+  }
+  if (column.length===0){
+    return 0;
+  }
   var total = 0,
       spaces = 0,
       nonSpaceOccupancy;
@@ -20,13 +42,21 @@ exports.nonespacesStatistics = function(column) {
 
 
 /*
- * gets one column, returns number
+ * @param {array} column
+ * @returns {Number}
  */
 exports.uniqueCharactersStatistics = function(column) {
+  if (!this.isArray(column)){
+    throw new Error('Expected an array');
+  }
+  if (column.length===0){
+    return 0;
+  }
   var uniqueCount = 0,
       uniqueElementsStorage = [];
+
   /*
-   * gets item to check, array in which check will perform
+   * gets item to check and array in which check will perform
    * returns true if item is unique
    */
   var checkUniqueness = function (item,array){
@@ -53,9 +83,13 @@ exports.uniqueCharactersStatistics = function(column) {
 
 
 /*
- * gets one column, returns data type listed in allowedDataTypes or null, if data type is not among them
+ * @param {array} column
+ * @returns {String} data type if it equals 'date', 'string' or 'number'
  */
 exports.getDataType = function(column) {
+  if (!this.isArray(column)){
+    throw new Error('Expected an array');
+  }
   var data = column[0];
   var allowedDataTypes = ['date', 'string', 'number'];
   
@@ -64,7 +98,7 @@ exports.getDataType = function(column) {
       return 'number';
     }
     else if (Date.parse(string)){
-      return 'date'
+      return 'date';
     }
     else{
       return 'string';

@@ -1,13 +1,11 @@
 /*
- *
- * ROUTES
- * 
+ * ROUTES 
  */
 var       fs = require('fs'),
         path = require('path'),
          csv = require('csv-streamify'),
       config = require('../modules/config'),
-     helpers = require('../modules/helpers'),
+    analyzis = require('../modules/analyzis'),
       logger = require('../modules/logger');
 
 
@@ -26,74 +24,37 @@ exports.index = function(req, res) {
  */
 exports.csvAnalyze = function(req, res) {
   req.pipe(req.busboy);
-  req.busboy.on('file', function (fieldname, file, filename) {
+  req.busboy.on('file',function (fieldname, file, filename) {
     console.log("Uploading: " + filename); 
-    
+
     var fileSize;
-    
-    file.on('data', function(data){
+    file.on('data',function(data){
       fileSize = data.length;
-    })
+    });
 
-    var callback = function(err, rows) {
-      if (err) {
-        console.log('CSV parsing error '+err);
-        res.status(500).send('CSV parsing error '+err)
-        return;
+    var csvToJson = csv({
+        delimiter: config.csvDelimiter, 
+        empty:' ',
+        objectMode: false
+      },
+      function(err, rows){
+        if (err) {
+          console.log('CSV parsing error '+err);
+          res.status(500).send('CSV parsing error '+err)
+          return;
+        }
+        /*CSV analyze*/
+        var result = analyzis.tableStats(rows);
+
+        /*Logging*/
+        var startTime = req.start;
+        var timeElapsed = Date.now() - startTime;
+        var memoryUsage = process.memoryUsage().heapUsed/1024;
+        logger.log({filename:filename,filesize: fileSize,timeMs:timeElapsed,appMemoryUsageKb:Math.round(memoryUsage)});
+
+        res.render('analyze',{pageName:'Analyze results',result:result});
       }
-
-      var headlines, 
-          columns = [],
-          result = [];
-  
-      rows.forEach(function (row,i) {
-        if (i===0){
-          headlines = row.slice(0);
-          console.log('headlines '+headlines.join());
-        }
-        else {
-          if (i===1){
-            //columns initialization
-            row.forEach(function(x,n){
-              columns[n] = [];
-              columns[n].push(x);
-            })
-          }
-          else{
-            row.forEach(function(x,n){
-              columns[n].push(x);
-            })
-          }
-        }
-      })
-      columns.forEach(function(column,i){
-        var columnName = headlines[i];
-        var columnNonespacesStatistics = helpers.nonespacesStatistics(column);
-        var uniqueCharactersStatistics = helpers.uniqueCharactersStatistics(column);
-        var dataType = helpers.getDataType(column);
-        var resultRow = {
-          name: columnName,
-          nonespaces: columnNonespacesStatistics,
-          uniquecharacters: uniqueCharactersStatistics,
-          datatype: dataType
-        }
-        result.push(resultRow);
-        console.log(columnName + '|' + columnNonespacesStatistics + '|' + uniqueCharactersStatistics + '|' + dataType)
-      })
-      
-      /*
-       * 
-       * Logging
-       * 
-       */
-      var startTime = req.start;
-      var timeElapsed = Date.now() - startTime;
-      var memoryUsage = process.memoryUsage().heapUsed/1024;
-      logger.log({filename:filename, filesize: fileSize, timeMs:timeElapsed,appMemoryUsageKb:Math.round(memoryUsage),timestamp:timestamp});
-      
-      res.render('analyze',{pageName:'Analyze results',result:result});
-    }
-    var csvToJson = csv({delimiter: config.csvDelimiter, empty:' ',objectMode: false},callback);
+    );
     
     file.pipe(csvToJson);
   })
@@ -128,8 +89,4 @@ exports.appStatistic = function(req, res) {
     })
     res.render('stats',{pageName:'Statistic', result: result});
   })
-}
-
-exports.emptyPage = function(req, res) {
-    res.render('404',{pageName:'Page not found'});
 }

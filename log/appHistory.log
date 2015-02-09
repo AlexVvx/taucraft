@@ -5,3 +5,5 @@
 {"filename":"testDoc.csv","filesize":142,"timeMs":25,"appMemoryUsageKb":10106,"level":"info","message":"Log Message","timestamp":"2015-02-08T20:40:45.801Z"}
 {"filename":"testDoc.csv","filesize":142,"timeMs":50,"appMemoryUsageKb":9106,"level":"info","message":"Log Message","timestamp":"2015-02-08T21:00:45.801Z"}
 {"filename":"testDoc.csv","filesize":142,"timeMs":15,"appMemoryUsageKb":14106,"level":"info","message":"Log Message","timestamp":"2015-02-08T21:43:45.801Z"}
+{"filename":"testDoc.csv","filesize":142,"timeMs":12,"appMemoryUsageKb":12011,"level":"info","message":"Log Message","timestamp":"2015-02-09T21:15:57.057Z"}
+{"filename":"testDoc2.csv","filesize":142,"timeMs":5,"appMemoryUsageKb":12645,"level":"info","message":"Log Message","timestamp":"2015-02-09T21:17:04.132Z"}
