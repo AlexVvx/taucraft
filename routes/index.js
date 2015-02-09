@@ -1,8 +1,6 @@
-/**
+/*
  *
- * 
  * ROUTES
- *
  * 
  */
 var       fs = require('fs'),
@@ -24,12 +22,18 @@ exports.index = function(req, res) {
 
 /**
  * Analyze results page
- * POST /
+ * POST /analyze
  */
 exports.csvAnalyze = function(req, res) {
   req.pipe(req.busboy);
   req.busboy.on('file', function (fieldname, file, filename) {
     console.log("Uploading: " + filename); 
+    
+    var fileSize;
+    
+    file.on('data', function(data){
+      fileSize = data.length;
+    })
 
     var callback = function(err, rows) {
       if (err) {
@@ -81,16 +85,14 @@ exports.csvAnalyze = function(req, res) {
        * 
        * Logging
        * 
-       * 
        */
       var startTime = req.start;
-      var timeElapsed = Date.now()-startTime;
+      var timeElapsed = Date.now() - startTime;
       var memoryUsage = process.memoryUsage().heapUsed/1024;
-      logger.log({filename:filename, timeMs:timeElapsed,memoryUsageKb:Math.round(memoryUsage)});
+      logger.log({filename:filename, filesize: fileSize, timeMs:timeElapsed,appMemoryUsageKb:Math.round(memoryUsage),timestamp:timestamp});
       
       res.render('analyze',{pageName:'Analyze results',result:result});
     }
-    //
     var csvToJson = csv({delimiter: config.csvDelimiter, empty:' ',objectMode: false},callback);
     
     file.pipe(csvToJson);
@@ -100,7 +102,7 @@ exports.csvAnalyze = function(req, res) {
 
 /**
  * Statistics page
- * GET /
+ * GET /stats
  */
 exports.appStatistic = function(req, res) {
   fs.readFile('./log/'+config.logFileName, {encoding: 'utf-8'}, function(err,data){
@@ -108,9 +110,9 @@ exports.appStatistic = function(req, res) {
       res.render('404',{pageName:err});
       return;
     }
-    //Я уперся в стену с парсингом лога winston. Похоже он не добавляет запятые между объектами json. 
-    //Попробую простое и быстрое решение.
-    //todo: fix this
+    //I can't fix json log (missing commas between objects) problem in winston right now.
+    //Will parse string values.
+    //Todo: fix the problem.
     var result = data.replace(/{"filename/g,'@arrayseparator@{"filename').slice(16);
     var array = result.split('@arrayseparator@');
     result = [];

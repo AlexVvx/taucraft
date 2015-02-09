@@ -1,12 +1,12 @@
 /*
  * Module dependencies
  */
-var express = require('express');
+var express = require('express'),
        path = require('path'),
  bodyParser = require('body-parser'),
          fs = require('fs'),
      busboy = require('connect-busboy'),
-     routes = require('./routes/index'), // user web routes;
+     routes = require('./routes/index'), // user web routes
      config = require('./modules/config'),
  middleware = require('./modules/middleware');
 

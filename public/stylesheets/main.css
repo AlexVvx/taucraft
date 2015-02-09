@@ -5830,3 +5830,8 @@ form {
 #sendCSV {
   margin-top: 20px;
 }
+.chart {
+  min-width: 310px;
+  height: 400px;
+  margin: 10px auto;
+}

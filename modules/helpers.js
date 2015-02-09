@@ -1,4 +1,3 @@
-//Заполненность колонки непустыми значениями
 /*
  * gets one column, returns number from 0 to 100
  */
@@ -19,7 +18,7 @@ exports.nonespacesStatistics = function(column) {
   return nonSpaceOccupancy
 }
 
-//Кол-во уникальных значений
+
 /*
  * gets one column, returns number
  */
@@ -52,7 +51,7 @@ exports.uniqueCharactersStatistics = function(column) {
   return uniqueCount;
 }
 
-//Тип
+
 /*
  * gets one column, returns data type listed in allowedDataTypes or null, if data type is not among them
  */

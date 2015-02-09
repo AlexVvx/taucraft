@@ -1,15 +1,24 @@
 extend layout
 block content
+  
+  script(type='text/javascript', src='javascripts/libs/highcharts/highcharts.js')
+  script(type='text/javascript', src='javascripts/chart.js')
+  script.
+      var chartData = !{JSON.stringify(result)}
 
+  .chart(id='fileProcessingTimeChart')
+  .chart(id='appMemoryUseChart')
   table.table.table-bordered
     thead
       tr
         th Имя файла
+        th Размер файла
         th Время, затраченное на обработку файла, мс
         th Общее потребление памяти приложением, кб
     tbody
     - each row in result
       tr
         td= row.filename
+        td= row.filesize
         td= row.timeMs
-        td= row.memoryUsageKb
+        td= row.appMemoryUsageKb

@@ -31,6 +31,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-execute');
 
-  //Эти задания будут выполнятся сразу же когда вы в консоли напечатание grunt, и нажмете Enter
   grunt.registerTask('default', ['less','watch']);
 };

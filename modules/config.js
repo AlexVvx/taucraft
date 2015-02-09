@@ -1,10 +1,9 @@
-var nconf = require('nconf');
-var fs = require('fs');
-
-nconf.argv()
-     .env();
+var nconf = require('nconf'),
+       fs = require('fs');
 
 var filename = 'config.json';
+
+nconf.argv().env();
 
 console.log('Reading configuration from '+filename);
 
